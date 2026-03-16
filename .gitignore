@@ -1,0 +1,14 @@
+# Node artifacts
+node_modules/
+package-lock.json
+
+# Local dev files
+.chrome-profile/
+out.png
+
+# Playwright cache (optional)
+.playwright/
+
+# Editor / OS
+.DS_Store
+*.log

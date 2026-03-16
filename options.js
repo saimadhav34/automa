@@ -105,4 +105,55 @@ document.getElementById("openNow").addEventListener("click", async () => {
   } catch {}
 });
 
+function setPlaywrightStatus(text, isError = false) {
+  const el = document.getElementById('playwrightStatus');
+  el.textContent = text || '';
+  el.style.color = isError ? '#dc2626' : '#333';
+}
+
+function showScreenshot(base64) {
+  const container = document.getElementById('screenshotResult');
+  const img = document.getElementById('screenshotImage');
+  img.src = `data:image/png;base64,${base64}`;
+  container.style.display = 'block';
+}
+
+async function runPlaywrightScreenshot() {
+  setPlaywrightStatus('Running…');
+  document.getElementById('screenshotResult').style.display = 'none';
+
+  const url = document.getElementById('playwrightUrl').value.trim();
+  const query = document.getElementById('playwrightQuery').value.trim();
+
+  if (!url || !query) {
+    setPlaywrightStatus('URL and search text are required.', true);
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:3000/screenshot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, query }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Server returned ${res.status}`);
+    }
+
+    const data = await res.json();
+    if (!data.success || !data.screenshot) {
+      throw new Error(data.error || 'No screenshot returned');
+    }
+
+    showScreenshot(data.screenshot);
+    setPlaywrightStatus('Screenshot captured! (served by local server)', false);
+  } catch (err) {
+    setPlaywrightStatus(err.message || 'Failed to get screenshot', true);
+  }
+}
+
+document.getElementById('runPlaywright').addEventListener('click', runPlaywrightScreenshot);
+
 restore();
