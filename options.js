@@ -46,6 +46,11 @@ async function restore() {
   createInputs(grid, state.urls);
   document.getElementById("openInNewWindow").checked = state.openInNewWindow;
   document.getElementById("activeIndex").value = state.openActiveIndex;
+
+  const urlInput = document.getElementById('playwrightUrl');
+  if (urlInput) {
+    urlInput.value = state.urls[0] || '';
+  }
 }
 
 function readInputs() {
@@ -135,8 +140,13 @@ async function runPlaywrightScreenshot() {
   const url = document.getElementById('playwrightUrl').value.trim();
   const query = document.getElementById('playwrightQuery').value.trim();
 
-  if (!url || !query) {
-    setPlaywrightStatus('URL and search text are required.', true);
+  if (!url) {
+    setPlaywrightStatus('Please set URL #1 (the first URL) above before taking a screenshot.', true);
+    return;
+  }
+
+  if (!query) {
+    setPlaywrightStatus('Search text is required.', true);
     return;
   }
 

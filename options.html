@@ -60,12 +60,13 @@
   <p class="desc">This will call a local helper service (run with <code>npm run server</code>) to open a page, type into find (Ctrl+F), and return a full-page screenshot.</p>
 
   <div class="grid" style="grid-template-columns: 6rem 1fr;">
-    <label for="playwrightUrl">URL</label>
-    <input id="playwrightUrl" type="text" placeholder="https://example.com" />
+    <label for="playwrightUrl">Site (URL #1)</label>
+    <input id="playwrightUrl" type="text" placeholder="Set URL 1 above" readonly />
 
     <label for="playwrightQuery">Search text</label>
     <input id="playwrightQuery" type="text" placeholder="email@example.com" />
   </div>
+  <div class="note">The screenshot is taken from the first URL in your list (URL #1).</div>
 
   <div class="actions">
     <button id="runPlaywright" class="btn">Take screenshot</button>
