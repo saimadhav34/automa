@@ -118,6 +118,16 @@ function showScreenshot(base64) {
   container.style.display = 'block';
 }
 
+async function checkLocalService() {
+  try {
+    const res = await fetch('http://localhost:3000/');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    setPlaywrightStatus('Local helper server is running (http://localhost:3000).');
+  } catch {
+    setPlaywrightStatus('Local server not reachable. Run `npm run server` in this repo and reload options.', true);
+  }
+}
+
 async function runPlaywrightScreenshot() {
   setPlaywrightStatus('Running…');
   document.getElementById('screenshotResult').style.display = 'none';
@@ -150,10 +160,15 @@ async function runPlaywrightScreenshot() {
     showScreenshot(data.screenshot);
     setPlaywrightStatus('Screenshot captured! (served by local server)', false);
   } catch (err) {
-    setPlaywrightStatus(err.message || 'Failed to get screenshot', true);
+    const msg = (err && err.message) ? err.message : 'Failed to get screenshot';
+    const hint = msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('networkerror')
+      ? ' Ensure the local server is running (`npm run server`) and that http://localhost:3000 is reachable.'
+      : '';
+    setPlaywrightStatus(`${msg}${hint}`, true);
   }
 }
 
 document.getElementById('runPlaywright').addEventListener('click', runPlaywrightScreenshot);
 
 restore();
+checkLocalService();
