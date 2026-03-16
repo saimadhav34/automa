@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Open 8 Pages — Options</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; margin: 20px; }
+    h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .desc { color: #555; margin-bottom: 1rem; }
+    .grid { display: grid; grid-template-columns: 2rem 1fr; gap: 8px 12px; margin-bottom: 1rem; }
+    label { text-align: right; padding-top: 6px; color: #333; }
+    input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
+    .row { margin: 10px 0; }
+    .actions { display: flex; gap: 8px; }
+    .btn { background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+    .btn.secondary { background: #6b7280; }
+    .note { color: #666; font-size: 0.9rem; margin-top: 10px; }
+    .success { color: #16a34a; margin-left: 8px; visibility: hidden; }
+    .error { color: #dc2626; margin-top: 8px; display: none; }
+    .inline { display: inline-block; }
+    details { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Configure the 8 pages to open</h1>
+  <p class="desc">Enter full URLs or just domains (we’ll auto-add <code>https://</code> if missing).</p>
+
+  <div class="grid" id="inputs"></div>
+
+  <div class="row">
+    <label class="inline" style="margin-right:8px;">
+      <input type="checkbox" id="openInNewWindow" />
+      Open in a new window
+    </label>
+    <label class="inline" style="margin-left:16px;">
+      Active tab index:
+      <input type="number" id="activeIndex" min="0" max="7" value="0" style="width:64px; margin-left:6px;" />
+    </label>
+  </div>
+
+  <div class="actions">
+    <button id="save" class="btn">Save</button>
+    <button id="openNow" class="btn secondary">Open Now</button>
+    <span id="savedMsg" class="success">Saved!</span>
+  </div>
+
+  <div class="error" id="errorBox"></div>
+
+  <details>
+    <summary>Tips</summary>
+    <ul>
+      <li>Use the keyboard shortcut <b>Ctrl+Shift+8</b> (macOS: <b>⌘⇧8</b>) to open all pages.</li>
+      <li>Click the extension icon to open them any time.</li>
+    </ul>
+  </details>
+
+  <script src="options.js"></script>
+
+</body>
+</html>

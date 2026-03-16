@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Open 8 Pages",
+  "version": "1.0.0",
+  "description": "Opens 8 user-defined pages when you click the icon.",
+  "permissions": ["storage", "tabs"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Open 8 Pages"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "commands": {
+    "open-all": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+8",
+        "mac": "Command+Shift+8"
+      },
+      "description": "Open all 8 configured pages"
+    }
+  }
+}
